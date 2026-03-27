@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BPO Ops Dashboard & Workbench</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">Ops<span>Flow</span></div>
+      <nav>
+        <button class="nav-item active">Dashboard</button>
+        <button class="nav-item">Workbench</button>
+        <button class="nav-item">Team Workload</button>
+        <button class="nav-item">SLA Monitor</button>
+        <button class="nav-item">Reports</button>
+        <button class="nav-item">Settings</button>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <header class="topbar card">
+        <h1>BPO Operations Dashboard & Workbench</h1>
+        <div class="topbar-actions">
+          <input id="globalSearch" placeholder="Search Record ID / Resource / Remarks" />
+          <button class="btn btn-secondary" id="resetFilters">Reset Filters</button>
+        </div>
+      </header>
+
+      <section class="dashboard-grid">
+        <div class="card metric" data-filter="completed7d">
+          <div class="metric-icon">✅</div>
+          <div>
+            <p>Completed Tasks (7d)</p>
+            <h2 id="completedCount">0</h2>
+            <span class="trend up" id="completedTrend">+0%</span>
+          </div>
+        </div>
+        <div class="card metric" data-filter="updated">
+          <div class="metric-icon">📝</div>
+          <div>
+            <p>Updated Tasks</p>
+            <h2 id="updatedCount">0</h2>
+            <span class="trend up">+5.4%</span>
+          </div>
+        </div>
+        <div class="card metric" data-filter="created">
+          <div class="metric-icon">📥</div>
+          <div>
+            <p>Created Tasks</p>
+            <h2 id="createdCount">0</h2>
+            <span class="trend up">+3.2%</span>
+          </div>
+        </div>
+        <div class="card metric" data-filter="dueSoon">
+          <div class="metric-icon">⏰</div>
+          <div>
+            <p>Due Soon</p>
+            <h2 id="dueSoonCount">0</h2>
+            <span class="trend down">-1.1%</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="analytics-grid">
+        <article class="card">
+          <div class="section-head">
+            <h3>Task Category Distribution</h3>
+          </div>
+          <div id="categoryBars"></div>
+        </article>
+
+        <article class="card">
+          <div class="section-head">
+            <h3>Priority Breakdown</h3>
+          </div>
+          <div id="priorityChart" class="priority-chart"></div>
+        </article>
+
+        <article class="card team-card">
+          <div class="section-head">
+            <h3>Team Workload</h3>
+          </div>
+          <div id="teamWorkload"></div>
+        </article>
+      </section>
+
+      <section class="card workbench">
+        <div class="workbench-head">
+          <h3>Queue / Workbench</h3>
+          <div class="filter-row">
+            <select id="statusFilter"><option value="">All Status</option><option>Open</option><option>Pending</option><option>Closed</option></select>
+            <select id="categoryFilter"><option value="">All Categories</option></select>
+            <select id="slaFilter"><option value="">All SLA</option><option>Yes</option><option>No</option></select>
+          </div>
+        </div>
+
+        <div class="entry-form-wrap">
+          <form id="taskForm" class="entry-form"></form>
+        </div>
+
+        <div class="table-wrap">
+          <table id="taskTable">
+            <thead>
+              <tr>
+                <th data-key="recordId">Record ID</th>
+                <th data-key="category">Category</th>
+                <th data-key="status">Status</th>
+                <th data-key="sla">SLA</th>
+                <th data-key="effortHours">Effort Hours</th>
+                <th data-key="resourceName">Resource Name</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <template id="fieldTemplate">
+    <label class="field">
+      <span class="field-label"></span>
+      <span class="tooltip"></span>
+      <span class="input-slot"></span>
+      <small class="error"></small>
+    </label>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
